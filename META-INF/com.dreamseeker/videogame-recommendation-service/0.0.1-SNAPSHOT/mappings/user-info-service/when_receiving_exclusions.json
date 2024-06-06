@@ -1,0 +1,36 @@
+{
+  "id" : "c9a50554-c690-4099-9595-238631e77852",
+  "request" : {
+    "urlPath" : "/fetch-recommendations",
+    "method" : "PUT",
+    "headers" : {
+      "Content-Type" : {
+        "equalTo" : "application/json"
+      }
+    },
+    "queryParameters" : {
+      "exclusions" : {
+        "equalTo" : "Platformer"
+      }
+    },
+    "bodyPatterns" : [ {
+      "matchesJsonPath" : "$[?(@.['userId'] =~ /[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/)]"
+    }, {
+      "matchesJsonPath" : "$.['preferredGenres'][?(@ == 'Platformer')]"
+    }, {
+      "matchesJsonPath" : "$.['preferredGenres'][?(@ == 'Stealth')]"
+    }, {
+      "matchesJsonPath" : "$.['preferredGenres'][?(@ == 'Adventure')]"
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "{\"videogames\":[{\"name\":\"Red Dead Redemption\",\"genre\":\"Adventure\"}],\"exclusions\":\"{{{request.query.exclusions.[0]}}}\"}",
+    "headers" : {
+      "Content-Type" : "application/json"
+    },
+    "transformers" : [ "response-template", "spring-cloud-contract" ]
+  },
+  "uuid" : "c9a50554-c690-4099-9595-238631e77852",
+  "priority" : 1
+}

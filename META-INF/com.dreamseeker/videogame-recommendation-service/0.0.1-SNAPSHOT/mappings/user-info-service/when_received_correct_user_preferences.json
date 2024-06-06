@@ -1,0 +1,33 @@
+{
+  "id" : "02933a25-040c-4752-8f75-89c8b0d54f3d",
+  "request" : {
+    "urlPath" : "/fetch-recommendations",
+    "method" : "PUT",
+    "headers" : {
+      "Content-Type" : {
+        "equalTo" : "application/json"
+      }
+    },
+    "bodyPatterns" : [ {
+      "matchesJsonPath" : "$[?(@.['userId'] =~ /[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/)]"
+    }, {
+      "matchesJsonPath" : "$[?(@.['userName'] =~ /([\\p{L}]*)?/)]"
+    }, {
+      "matchesJsonPath" : "$.['preferredGenres'][?(@ == 'Platformer')]"
+    }, {
+      "matchesJsonPath" : "$.['preferredGenres'][?(@ == 'Stealth')]"
+    }, {
+      "matchesJsonPath" : "$.['preferredGenres'][?(@ == 'Adventure')]"
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "{\"videogames\":[{\"name\":\"Red Dead Redemption\",\"isGOTY\":{\"value\":\"true\"},\"genre\":\"Adventure\"},{\"name\":\"Crash Bandicoot 3\",\"genre\":\"Platformer\"}]}",
+    "headers" : {
+      "Content-Type" : "application/json"
+    },
+    "transformers" : [ "response-template", "spring-cloud-contract" ]
+  },
+  "uuid" : "02933a25-040c-4752-8f75-89c8b0d54f3d",
+  "priority" : 2
+}
